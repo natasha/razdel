@@ -8,6 +8,11 @@ from random import (
     seed as set_seed
 )
 
+from razdel.compat import (
+    decode,
+    encode,
+    BrokenPipeError
+)
 from razdel.eval.tests import (
     generate_partition_precision_tests,
     generate_partition_recall_tests
@@ -37,12 +42,12 @@ ZOO = {
 
 def stdin_lines():
     for line in sys.stdin:
-        yield line.rstrip('\n')
+        yield decode(line).rstrip('\n')
 
 
 def stdout_lines(lines):
     for line in lines:
-        print(line, file=sys.stdout)
+        print(encode(line), file=sys.stdout)
 
 
 def generate_(partitions):
@@ -97,10 +102,10 @@ def run_command(args):
 def show_guess(guess, etalon):
     print('---etalon')
     for _ in etalon:
-        print('>', _.text)
+        print('>', encode(_.text))
     print('---guess')
     for _ in guess:
-        print('>', _.text)
+        print('>', encode(_.text))
     print()
 
 
@@ -147,7 +152,7 @@ def main():
         parser.exit()
     try:
         args.function(args)
-    except (BrokenPipeError, IOError):
+    except BrokenPipeError:
         pass
 
 
