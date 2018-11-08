@@ -58,7 +58,7 @@ def log(*args):
 
 class DebugSegmenter(Segmenter):
     def join(self, split):
-        log(split)
+        log(split.left, '|', split.delimiter, '|', split.right)
         for rule in self.rules:
             action = rule(split)
             if action:

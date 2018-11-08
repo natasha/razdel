@@ -18,15 +18,15 @@ from .segmenter import (
 )
 
 
-SPACE_SUFFIX = re.compile(r'\s$')
-SPACE_PREFIX = re.compile(r'^\s')
+SPACE_SUFFIX = re.compile(r'\s$', re.U)
+SPACE_PREFIX = re.compile(r'^\s', re.U)
 
-TOKEN = re.compile(r'([^\W\d]+|\d+|[^\w\s])')
-FIRST_TOKEN = re.compile(r'^\s*([^\W\d]+|\d+|[^\w\s])')
-LAST_TOKEN = re.compile(r'([^\W\d]+|\d+|[^\w\s])\s*$')
-WORD = re.compile(r'([^\W\d]+|\d+)')
-PAIR_SOKR = re.compile(r'(\w)\s*\.\s*(\w)\s*$')
-INT_SOKR = re.compile(r'\d+\s*-?\s*(\w+)\s*$')
+TOKEN = re.compile(r'([^\W\d]+|\d+|[^\w\s])', re.U)
+FIRST_TOKEN = re.compile(r'^\s*([^\W\d]+|\d+|[^\w\s])', re.U)
+LAST_TOKEN = re.compile(r'([^\W\d]+|\d+|[^\w\s])\s*$', re.U)
+WORD = re.compile(r'([^\W\d]+|\d+)', re.U)
+PAIR_SOKR = re.compile(r'(\w)\s*\.\s*(\w)\s*$', re.U)
+INT_SOKR = re.compile(r'\d+\s*-?\s*(\w+)\s*$', re.U)
 
 DOT = '.'
 SEMICOLON = ';'
@@ -44,14 +44,14 @@ BRACKETS = OPEN_BRACKETS + CLOSE_BRACKETS
 
 CLOSE_BOUNDS = CLOSE_QUOTES + CLOSE_BRACKETS
 
-ROMAN = re.compile(r'^[IVXML]+$')
+ROMAN = re.compile(r'^[IVXML]+$', re.U)
 BULLET_CHARS = set('§абвгдеabcdef')
 BULLET_BOUNDS = '.)'
 BULLET_SIZE = 20
 
 DELIMITERS = ENDINGS + SEMICOLON + GENERIC_QUOTES + CLOSE_QUOTES + CLOSE_BRACKETS
 SMILES = r'[=:;]-?[)(]{1,3}'  # :-) ;) =(((
-SMILE_PREFIX = re.compile(r'^\s*' + SMILES)
+SMILE_PREFIX = re.compile(r'^\s*' + SMILES, re.U)
 
 
 def parse_sokrs(lines):
@@ -278,8 +278,7 @@ def sokr_left(split):
     if left in HEAD_SOKRS:
         return JOIN
 
-    if left in SOKRS:
-        if is_sokr(right):
+    if left in SOKRS and is_sokr(right):
             return JOIN
 
 
@@ -433,7 +432,7 @@ class SentSplitter(Splitter):
             smiles=SMILES
         )
         self.window = window
-        self.re = re.compile(self.pattern)
+        self.re = re.compile(self.pattern, re.U)
 
     def __call__(self, text):
         matches = self.re.finditer(text)
