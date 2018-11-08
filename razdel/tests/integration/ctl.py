@@ -47,18 +47,25 @@ def stdout_lines(lines):
         print(encode(line), file=sys.stdout)
 
 
-def generate_(partitions):
+def generate_(partitions, precision, recall):
     for partition in partitions:
-        for test in generate_partition_precision_tests(partition):
-            yield test
-        for test in generate_partition_recall_tests(partition):
-            yield test
+        if precision:
+            for test in generate_partition_precision_tests(partition):
+                yield test
+        if recall:
+            for test in generate_partition_recall_tests(partition):
+                yield test
 
 
-def generate_command(_):
+def generate_command(args):
+    precision = args.precision
+    recall = args.recall
+    if not precision and not recall:
+        precision = True
+        recall = True
     lines = stdin_lines()
     partitions = parse_partitions(lines)
-    tests = generate_(partitions)
+    tests = generate_(partitions, precision, recall)
     lines = format_partitions(tests)
     stdout_lines(lines)
 
@@ -117,6 +124,8 @@ def main():
 
     generate = sub.add_parser('gen')
     generate.set_defaults(function=generate_command)
+    generate.add_argument('--precision', action='store_true')
+    generate.add_argument('--recall', action='store_true')
 
     sample = sub.add_parser('sample')
     sample.set_defaults(function=sample_command)
