@@ -3,10 +3,7 @@ from __future__ import unicode_literals, print_function
 
 import sys
 import argparse
-from random import (
-    sample,
-    seed as set_seed
-)
+from random import seed, sample
 
 from razdel.compat import (
     decode,
@@ -67,39 +64,13 @@ def generate_command(_):
 
 
 def sample_command(args):
-    set_seed(args.seed)
+    seed(args.seed)
     lines = list(stdin_lines())
     lines = sample(lines, args.size)
     stdout_lines(lines)
 
 
-def error_(tests, segment):
-    for test in tests:
-        guess = list(segment(test.as_text))
-        etalon = list(test.as_substrings)
-        if guess != etalon:
-            yield test
-
-
-def error_command(args):
-    segment = ZOO[args.segment]
-    lines = stdin_lines()
-    partitions = parse_partitions(lines)
-    tests = error_(partitions, segment)
-    lines = format_partitions(tests)
-    stdout_lines(lines)
-
-
-def run_command(args):
-    segment = ZOO[args.segment]
-    lines = stdin_lines()
-    partitions = parse_partitions(lines)
-    partitions = update_partitions(partitions, segment)
-    lines = format_partitions(partitions)
-    stdout_lines(lines)
-
-
-def show_guess(guess, etalon):
+def show_(guess, etalon):
     print('---etalon')
     for _ in etalon:
         print('>', encode(_.text))
@@ -109,14 +80,33 @@ def show_guess(guess, etalon):
     print()
 
 
-def show_command(args):
-    segment = ZOO[args.segment]
-    lines = stdin_lines()
-    tests = parse_partitions(lines)
+def diff_(tests, segment, show):
     for test in tests:
         guess = list(segment(test.as_text))
         etalon = list(test.as_substrings)
-        show_guess(guess, etalon)
+        if guess != etalon:
+            if show:
+                show_(guess, etalon)
+            else:
+                yield test
+
+
+def diff_command(args):
+    segment = ZOO[args.segment]
+    lines = stdin_lines()
+    partitions = parse_partitions(lines)
+    tests = diff_(partitions, segment, args.show)
+    lines = format_partitions(tests)
+    stdout_lines(lines)
+
+
+def update_command(args):
+    segment = ZOO[args.segment]
+    lines = stdin_lines()
+    partitions = parse_partitions(lines)
+    partitions = update_partitions(partitions, segment)
+    lines = format_partitions(partitions)
+    stdout_lines(lines)
 
 
 def main():
@@ -133,17 +123,14 @@ def main():
     sample.add_argument('size', type=int)
     sample.add_argument('--seed', type=int, default=1)
 
-    error = sub.add_parser('err')
-    error.set_defaults(function=error_command)
-    error.add_argument('segment', choices=ZOO)
+    diff = sub.add_parser('diff')
+    diff.set_defaults(function=diff_command)
+    diff.add_argument('segment', choices=ZOO)
+    diff.add_argument('--show', action='store_true')
 
-    run = sub.add_parser('run')
-    run.set_defaults(function=run_command)
+    run = sub.add_parser('up')
+    run.set_defaults(function=update_command)
     run.add_argument('segment', choices=ZOO)
-
-    show = sub.add_parser('show')
-    show.set_defaults(function=show_command)
-    show.add_argument('segment', choices=ZOO)
 
     args = sys.argv[1:]
     args = parser.parse_args(args)
