@@ -1,0 +1,6 @@
+.cache/
+.ipynb_checkpoints/
+razdel.egg-info/
+*.pyc
+__pycache__/
+.DS_Store
