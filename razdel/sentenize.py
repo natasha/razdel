@@ -366,6 +366,22 @@ def list_item(split):
         return JOIN
 
 
+#########
+#
+#   DASH
+#
+########
+
+
+def dash_right(split):
+    if split.right_token not in DASHES:
+        return
+
+    right = split.right_word
+    if right and is_lower_alpha(right):
+        return JOIN
+
+
 ##########
 #
 #   SPLIT
@@ -470,6 +486,8 @@ RULES = [FunctionRule(_) for _ in [
 
     close_quote,
     close_bracket,
+
+    dash_right,
 ]]
 
 
