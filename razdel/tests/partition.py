@@ -10,7 +10,7 @@ from razdel.substring import Substring
 class Partition(Record):
     __attributes__ = ['chunks']
 
-    is_fill = re.compile('^\s+$').match
+    is_fill = re.compile('^\s*$').match
 
     def __init__(self, chunks):
         self.chunks = chunks
@@ -94,3 +94,30 @@ def update_partition(partition, segment):
 def update_partitions(partitions, segment):
     for partition in partitions:
         yield update_partition(partition, segment)
+
+
+def substrings_partition_(substrings, fill):
+    previous = 0
+    for index, substring in enumerate(substrings):
+        if index > 0:
+            size = substring.start - previous
+            yield fill * size
+        yield substring.text
+        previous = substring.stop
+
+
+def substrings_partition(substrings, fill=' '):
+    chunks = list(substrings_partition_(substrings, fill))
+    return Partition(chunks)
+
+
+def chunks_partition_(chunks, fill):
+    for index, chunk in enumerate(chunks):
+        if index > 0:
+            yield fill
+        yield chunk
+
+
+def chunks_partition(chunks, fill=' '):
+    chunks = list(chunks_partition_(chunks, fill))
+    return Partition(chunks)

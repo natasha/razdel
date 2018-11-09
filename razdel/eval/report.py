@@ -41,11 +41,12 @@ class Task(Record):
 
 
 class Result(Record):
-    __attributes__ = ['task', 'score', 'time']
+    __attributes__ = ['task', 'correct', 'total', 'time']
 
-    def __init__(self, task, score, time):
+    def __init__(self, task, correct, total, time):
         self.task = task
-        self.score = score
+        self.correct = correct
+        self.total = total
         self.time = time
 
 
@@ -66,23 +67,19 @@ def run_task(task):
             correct += 1
         total += 1
     time = clock() - start
-    score = correct / total
-    return Result(task, score, time)
+    return Result(task, correct, total, time)
 
 
 def result_rows(results):
-    for task, score, time in results:
+    for _ in results:
         yield dict(
-            dataset=task.dataset.name,
-            model=task.model.name,
-            metric=task.metric.name,
-            score=score,
-            time=time
+            dataset=_.task.dataset.name,
+            model=_.task.model.name,
+            metric=_.task.metric.name,
+            correct=_.correct,
+            total=_.total,
+            time=_.time
         )
-
-
-def harm_mean(a, b):
-    return 2 * a * b / (a + b)
 
 
 def show_results(table):
@@ -93,15 +90,16 @@ def show_results(table):
         columns='metric'
     )
     time = table.pop('time')
-    score = table.pop('score')
+    correct = table.pop('correct')
+    total = table.pop('total')
     table.columns = []  # remove levels
     table['time'] = time.precision + time.recall
-    table['precision'] = score.precision
-    table['recall'] = score.recall
-    table['f1'] = harm_mean(score.precision, score.recall)
+    table['precision'] = total.precision - correct.precision
+    table['recall'] = total.recall - correct.recall
+    table['errors'] = table.precision + table.recall
     table = table.apply(
-        'f1:{0.f1:.4f} (p:{0.precision:.2f}, '
-        'r:{0.recall:.2f}), {0.time:.1f}s'.format,
+        '{0.errors:.0f} ({0.precision:.0f} '
+        '+ {0.recall:.0f}), {0.time:.1f}s'.format,
         axis=1
     )
     table = table.unstack()
