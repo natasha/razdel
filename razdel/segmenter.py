@@ -37,7 +37,6 @@ class Segmenter(Record):
             if self.join(split):
                 buffer = buffer + split.delimiter + right
             else:
-
                 yield buffer + split.delimiter
                 buffer = right
         yield buffer

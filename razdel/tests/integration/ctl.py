@@ -25,7 +25,10 @@ from razdel.eval.zoo import (
     spacy_tokenize,
     spacy_tokenize2,
 )
-from razdel import sentenize
+from razdel import (
+    sentenize,
+    tokenize
+)
 from ..partition import (
     parse_partitions,
     format_partitions,
@@ -44,6 +47,7 @@ ZOO = {
     'nltk_tokenize': nltk_tokenize,
     'spacy_tokenize': spacy_tokenize,
     'spacy_tokenize2': spacy_tokenize2,
+    'tokenize': tokenize,
 }
 
 
