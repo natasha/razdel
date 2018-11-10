@@ -5,6 +5,11 @@ from os.path import join as join_path  # noqa
 from glob import iglob as list_paths  # noqa
 from xml.etree import ElementTree as ET
 
+from razdel.compat import (
+    decode,
+    encode,
+)
+
 
 class cached_property(object):
     def __init__(self, function):
@@ -77,13 +82,13 @@ def assert_type(item, types):
 def load_lines(path):
     with open(path) as file:
         for line in file:
-            yield line.rstrip('\n')
+            yield decode(line).rstrip('\n')
 
 
 def dump_lines(lines, path):
     with open(path, 'w') as file:
         for line in lines:
-            file.write(line + '\n')
+            file.write(encode(line) + '\n')
 
 
 def load_xml(path):
