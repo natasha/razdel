@@ -55,7 +55,7 @@ Precision-ошибки считались так: возьмём все токе
 
 ### Токены
 `errors (precision errors + recall errors), time`, чем меньше, тем лучше:
-<table border="1" class="dataframe">
+<table border="0" class="dataframe">
   <thead>
     <tr style="text-align: right;">
       <th></th>
