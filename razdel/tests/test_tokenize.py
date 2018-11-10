@@ -6,6 +6,11 @@ import pytest
 from razdel import tokenize
 
 from .partition import parse_partitions
+from .common import (
+    run,
+    data_path,
+    data_lines
+)
 
 
 UNIT = parse_partitions([
@@ -29,6 +34,14 @@ UNIT = parse_partitions([
 
 @pytest.mark.parametrize('test', UNIT)
 def test_unit(test):
-    guess = list(tokenize.debug(test.as_text))
-    etalon = list(test.as_substrings)
-    assert guess == etalon
+    run(tokenize, test)
+
+
+def int_tests():
+    path = data_path('tokens.txt')
+    lines = data_lines(path, 1000)
+    return parse_partitions(lines)
+
+
+def test_int(int_test):
+    run(tokenize, int_test)

@@ -6,6 +6,11 @@ import pytest
 from razdel import sentenize
 
 from .partition import parse_partitions
+from .common import (
+    run,
+    data_path,
+    data_lines
+)
 
 
 UNIT = parse_partitions([
@@ -51,19 +56,19 @@ UNIT = parse_partitions([
 
     'пастухов - тоже ;)| |Я вспомнила',
     'распределённой жабы :))| |А платить мне будут аж 1200 рублей'
-
-    # 'Shit, вобщем. :(',
-    # 'идёт Yahoo! (494 млн долларов)',
-    # 'вообразила себя дочерью русского императора… »',
-    # 'Вай ? ! ! »',
-
-    # 'бета-версию «Яндекс. Почты»',
-    # 'Выставке "«15—58». Химкинская история. Фотографии. Документы", которая...',
 ])
 
 
 @pytest.mark.parametrize('test', UNIT)
 def test_unit(test):
-    guess = list(sentenize.debug(test.as_text))
-    etalon = list(test.as_substrings)
-    assert guess == etalon
+    run(sentenize, test)
+
+
+def int_tests():
+    path = data_path('sents.txt')
+    lines = data_lines(path, 1000)
+    return parse_partitions(lines)
+
+
+def test_int(int_test):
+    run(sentenize, int_test)
