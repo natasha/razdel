@@ -115,3 +115,38 @@ def spacy_tokenize2(text):
     doc = NLP2(text)
     chunks = [token.text for token in doc]
     return find_substrings(chunks, text)
+
+
+# {'analysis': [], 'text': 'Mystem'},
+#  {'text': ' — '},
+#  {'analysis': [{'lex': 'консольный'}], 'text': 'консольная'},
+#  {'text': ' '},
+#  {'analysis': [{'lex': 'программа'}], 'text': 'программа'},
+#  {'text': '\n'}]
+
+
+MYSTEM = None
+
+
+def parse_mystem(data):
+    for item in data:
+        text = item['text'].strip()
+        if text:
+            yield text
+
+
+def mystem_tokenize(text):
+    from pymystem3 import Mystem
+
+    global MYSTEM
+    if not MYSTEM:
+        MYSTEM = Mystem(
+            grammar_info=False,
+            entire_input=True,
+            disambiguation=False,
+            weight=False
+        )
+
+    data = MYSTEM.analyze(text)
+    chunks = parse_mystem(data)
+    return find_substrings(chunks, text)
