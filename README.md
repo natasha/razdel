@@ -1,4 +1,4 @@
-# razdel
+# razdel [![Build Status](https://travis-ci.org/natasha/razdel.svg?branch=master)](https://travis-ci.org/natasha/razdel)
 
 `razdel` — библиотека для разделения русскоязычного текста на токены и предложения. Система построена на правилах. Показывает на обоих задачах качество и производительность выше других открытых инструментов.
 
