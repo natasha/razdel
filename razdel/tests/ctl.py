@@ -30,7 +30,7 @@ from razdel import (
     sentenize,
     tokenize
 )
-from ..partition import (
+from .partition import (
     parse_partitions,
     format_partitions,
     update_partitions
