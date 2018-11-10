@@ -51,7 +51,7 @@ $ pip install razdel
 
 Precision-ошибки считались так: возьмём все токены из разметки, например, "что-то", проверим, что токенизатор не делит их на части. Recall-ошибки считались так: возьмём все биграммы токенов, например, "что-то?", проверим, что разделение происходит там где нужно, результат "что", "-", "то", "?" не считается recall-ошибкой, "то" и "?" разделены.
 
-Что такое `spacy_tokenize`, `spacy_tokenize2` написано в [eval/zoo.py](https://github.com/natasha/razdel/blob/master/razdel/eval/zoo.py). Таблицы вычисляются в [eval.ipynb](https://github.com/natasha/razdel/blob/master/eval.ipynb)
+Что такое, например, `spacy_tokenize`, `spacy_tokenize2` написано в [eval/zoo.py](https://github.com/natasha/razdel/blob/master/razdel/eval/zoo.py). Таблицы вычисляются в [eval.ipynb](https://github.com/natasha/razdel/blob/master/eval.ipynb)
 
 ### Токены
 `errors (precision errors + recall errors), time`, чем меньше, тем лучше:
