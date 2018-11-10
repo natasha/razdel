@@ -1,0 +1,19 @@
+# coding: utf-8
+from __future__ import unicode_literals
+
+
+ENDINGS = '.?!…'
+DASHES = '‑–—−-'
+
+OPEN_QUOTES = '«“‘'
+CLOSE_QUOTES = '»”’'
+GENERIC_QUOTES = '"„\''
+QUOTES = OPEN_QUOTES + CLOSE_QUOTES + GENERIC_QUOTES
+
+OPEN_BRACKETS = '([}'
+CLOSE_BRACKETS = ')]}'
+BRACKETS = OPEN_BRACKETS + CLOSE_BRACKETS
+
+BOUNDS = QUOTES + BRACKETS
+
+SMILES = r'[=:;]-?[)(]{1,3}'  # :-) ;) =(((

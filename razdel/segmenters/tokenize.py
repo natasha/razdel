@@ -3,22 +3,31 @@ from __future__ import unicode_literals
 
 import re
 
-from .utils import (
+from razdel.utils import (
     Record,
     cached_property
 )
-from .rule import (
+from razdel.rule import (
     JOIN, SPLIT,
     Rule,
     FunctionRule
 )
-from .split import (
+from razdel.split import (
     Split,
     Splitter,
 )
-from .segmenter import (
+
+from .base import (
     Segmenter,
     DebugSegmenter
+)
+from .punct import (
+    DASHES,
+    ENDINGS,
+    QUOTES,
+    BRACKETS,
+
+    SMILES
 )
 
 
@@ -28,21 +37,20 @@ INT = 'INT'
 PUNCT = 'PUNCT'
 OTHER = 'OTHER'
 
+PUNCTS = '\\/!#$%&*+,.:;<=>?@^_`|~№…' + DASHES + QUOTES + BRACKETS
+
 ATOM = re.compile(
     r'''
     (?P<RU>[а-яё]+)
     |(?P<LAT>[a-z]+)
     |(?P<INT>\d+)
-    |(?P<PUNCT>[-\\/!#$%&()\[\]\*\+,\.:;<=>?@^_`{|}~№…"\'«»„“ʼʻ”])
+    |(?P<PUNCT>[''' + re.escape(PUNCTS) + '''])
     |(?P<OTHER>\S)
     ''',
     re.I | re.U | re.X
 )
 
-DASHES = '‑–—−-'
-UNDERSCORE = '_'
-DOT = '.'
-COMMA = ','
+SMILE = re.compile(r'^' + SMILES + '$', re.U)
 
 
 ##########
@@ -67,10 +75,10 @@ def split_space(split):
 class Rule2112(Rule):
     def __call__(self, split):
         if self.delimiter(split.left):
-            # что-|то
+            # cho-|to
             left, right = split.left_2, split.right_1
         elif self.delimiter(split.right):
-            # что|-то
+            # cho|-to
             left, right = split.left_1, split.right_2
         else:
             return
@@ -97,7 +105,7 @@ class UnderscoreRule(Rule2112):
     name = 'dash'
 
     def delimiter(self, delimiter):
-        return delimiter == UNDERSCORE
+        return delimiter == '_'
 
     def rule(self, left, right):
         if left.type == PUNCT or right.type == PUNCT:
@@ -109,7 +117,18 @@ class FloatRule(Rule2112):
     name = 'float'
 
     def delimiter(self, delimiter):
-        return delimiter in (DOT, COMMA)
+        return delimiter in '.,'
+
+    def rule(self, left, right):
+        if left.type == INT and right.type == INT:
+            return JOIN
+
+
+class FractionRule(Rule2112):
+    name = 'fraction'
+
+    def delimiter(self, delimiter):
+        return delimiter in '/\\'
 
     def rule(self, left, right):
         if left.type == INT and right.type == INT:
@@ -118,29 +137,40 @@ class FloatRule(Rule2112):
 
 ########
 #
-#   11
+#   PUNCT
 #
 ##########
 
 
 def punct(split):
-    if split.left_1.type == PUNCT and split.right_1.type == PUNCT:
+    if split.left_1.type != PUNCT or split.right_1.type != PUNCT:
+        return
+
+    left = split.left
+    right = split.right
+
+    if SMILE.match(split.buffer + right):
+        return JOIN
+
+    if left in ENDINGS and right in ENDINGS:
+        # ... ?!
+        return JOIN
+
+    if left + right in ('--', '**'):
+        # ***
         return JOIN
 
 
-#########
-#
-#   l1
-#
-##########
+def other(split):
+    left = split.left_1.type
+    right = split.right_1.type
 
+    if left == OTHER and right in (OTHER, RU, LAT):
+        # ΔP
+        return JOIN
 
-def initials(split):
-    if split.right_1.text != DOT:
-        return
-
-    left = split.left_1.text
-    if len(left) == 1 and left.isupper():
+    if left in (OTHER, RU, LAT) and right == OTHER:
+        # Δσ mβж
         return JOIN
 
 
@@ -182,6 +212,11 @@ class TokenSplit(Split):
             return self.left_atoms[-2]
 
     @cached_property
+    def left_3(self):
+        if len(self.left_atoms) > 2:
+            return self.left_atoms[-3]
+
+    @cached_property
     def right_1(self):
         return self.right_atoms[0]
 
@@ -190,9 +225,14 @@ class TokenSplit(Split):
         if len(self.right_atoms) > 1:
             return self.right_atoms[1]
 
+    @cached_property
+    def right_3(self):
+        if len(self.right_atoms) > 2:
+            return self.right_atoms[2]
+
 
 class TokenSplitter(Splitter):
-    def __init__(self, window=2):
+    def __init__(self, window=3):
         self.window = window
 
     def atoms(self, text):
@@ -231,9 +271,10 @@ RULES = [
     DashRule(),
     UnderscoreRule(),
     FloatRule(),
+    FractionRule(),
 
     FunctionRule(punct),
-    FunctionRule(initials)
+    FunctionRule(other),
 ]
 
 

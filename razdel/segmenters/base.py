@@ -1,16 +1,16 @@
 # coding: utf-8
 from __future__ import unicode_literals, print_function
 
-from .utils import (
+from razdel.utils import (
     Record,
     assert_type
 )
-from .rule import (
+from razdel.rule import (
     JOIN,
     Rule
 )
-from .split import Splitter
-from .substring import find_substrings
+from razdel.split import Splitter
+from razdel.substring import find_substrings
 
 
 class Segmenter(Record):
@@ -51,15 +51,11 @@ class Segmenter(Record):
         return find_substrings(chunks, text)
 
 
-def log(*args):
-    print(*args)
-
-
 class DebugSegmenter(Segmenter):
     def join(self, split):
-        log(split.left, '|', split.delimiter, '|', split.right)
+        print(split.left, '|', split.delimiter, '|', split.right)
         for rule in self.rules:
             action = rule(split)
             if action:
-                log('\t', action, rule.name)
+                print('\t', action, rule.name)
                 return action == JOIN

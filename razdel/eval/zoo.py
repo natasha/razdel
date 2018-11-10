@@ -61,6 +61,11 @@ def segtok_sentenize(text):
 TOKEN = re.compile(r'([^\W\d]+|\d+|[^\w\s])', re.U)
 
 
+def space_tokenize(text):
+    chunks = re.split(r'\s+', text)
+    return find_substrings(chunks, text)
+
+
 def re_tokenize(text):
     chunks = TOKEN.findall(text)
     return find_substrings(chunks, text)

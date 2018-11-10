@@ -1,3 +1,5 @@
 
-from .sentenize import sentenize
-from .tokenize import tokenize
+from .segmenters import (
+    sentenize,
+    tokenize
+)

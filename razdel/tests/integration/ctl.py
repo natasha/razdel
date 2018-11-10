@@ -20,6 +20,7 @@ from razdel.eval.zoo import (
     nltk_sentenize,
     segtok_sentenize,
 
+    space_tokenize,
     re_tokenize,
     nltk_tokenize,
     spacy_tokenize,
@@ -43,6 +44,7 @@ ZOO = {
     'segtok_sentenize': segtok_sentenize,
     'sentenize': sentenize,
 
+    'space_tokenize': space_tokenize,
     're_tokenize': re_tokenize,
     'nltk_tokenize': nltk_tokenize,
     'spacy_tokenize': spacy_tokenize,
