@@ -8,3 +8,5 @@ __pycache__/
 notes.ipynb
 .coverage
 coverage.xml
+build
+dist
