@@ -82,9 +82,27 @@ def result_rows(results):
         )
 
 
-def show_results(table):
+def format_column(column, name, github):
+    best = (
+        column[1:]   # skip baseline
+        if len(column) > 1
+        else column
+    ).min()
+    for value in column:
+        string = (
+            '{:.1f}'
+            if name == 'time'
+            else '{:.0f}'
+        ).format(value)
+        if github and value == best:
+            string = '<b>%s</b>' % string
+        yield string
+
+
+def show_results(table, github=False):
     models = table.model.unique()
     datasets = table.dataset.unique()
+
     table = table.pivot_table(
         index=['model', 'dataset'],
         columns='metric'
@@ -92,21 +110,32 @@ def show_results(table):
     time = table.pop('time')
     correct = table.pop('correct')
     total = table.pop('total')
-    table.columns = []  # remove levels
+    table.columns = table.columns.droplevel()
     table['time'] = time.precision + time.recall
-    table['precision'] = total.precision - correct.precision
+    table['prec'] = total.precision - correct.precision
     table['recall'] = total.recall - correct.recall
-    table['errors'] = table.precision + table.recall
-    table = table.apply(
-        '{0.errors:.0f} ({0.precision:.0f} '
-        '+ {0.recall:.0f}), {0.time:.1f}s'.format,
-        axis=1
-    )
-    table = table.unstack()
+    table['errors'] = table.prec + table.recall
+    metrics = ['errors', 'prec', 'recall', 'time']
+    if github:
+        metrics = ['errors', 'time']
+
+    table = table.stack()
+    table = table.unstack(['dataset', 'metric'])
+
     table = table.reindex(
         index=models,
-        columns=datasets
+        columns=[
+            (dataset, metric)
+            for dataset in datasets
+            for metric in metrics
+        ]
     )
+
+    for dataset in datasets:
+        for metric in metrics:
+            column = table[dataset, metric]
+            table[dataset, metric] = list(format_column(column, metric, github))
+
     table.index.name = None
-    table.columns.name = None
+    table.columns.names = None, None
     return table
