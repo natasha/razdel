@@ -184,3 +184,45 @@ MIT
 - Чат — https://telegram.me/natural_language_processing
 - Тикеты — https://github.com/natasha/razdel/issues
 
+## Разработка
+
+Тесты
+
+```bash
+pip install -e .
+pip install -r requirements.txt
+make test
+make int  # 2000 integration tests
+```
+
+Алиас `ctl`
+
+```bash
+source alias.sh
+```
+
+Посмотреть ошибки `mystem` на `syntag`
+
+```bash
+cat data/syntag_tokens.txt | ctl sample 1000 | ctl gen | ctl diff --show moses_tokenize | less
+```
+
+Нетривиальные тесты для токенов
+
+```bash
+pv data/*_tokens.txt | ctl gen --recall | ctl diff space_tokenize > tests.txt
+pv data/*_tokens.txt | ctl gen --precision | ctl diff re_tokenize >> tests.txt
+```
+
+Обновить интеграционные тесты
+
+```bash
+cd razdel/tests/data/
+pv sents.txt | ctl up sentenize > t; mv t sents.txt
+```
+
+Посмотреть различия токенизации `razdel` и `moses`
+
+```bash
+cat data/*_tokens.txt | ctl sample 1000 | ctl gen | ctl up tokenize | ctl diff moses_tokenize | less
+```
