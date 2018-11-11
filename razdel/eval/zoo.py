@@ -182,3 +182,10 @@ def moses_tokenize(text):
 
     chunks = MOSES_TOK(text)
     return find_substrings(chunks, text)
+
+
+def segtok_tokenize(text):
+    from segtok.tokenizer import word_tokenizer
+
+    chunks = word_tokenizer(text)
+    return find_substrings(chunks, text)
