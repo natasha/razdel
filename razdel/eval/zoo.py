@@ -58,6 +58,20 @@ def segtok_sentenize(text):
     return find_substrings(chunks, text)
 
 
+MOSES_SENT = None
+
+
+def moses_sentenize(text):
+    from mosestokenizer import MosesSentenceSplitter
+
+    global MOSES_SENT
+    if not MOSES_SENT:
+        MOSES_SENT = MosesSentenceSplitter('ru')
+
+    chunks = MOSES_SENT([text])
+    return find_substrings(chunks, text)
+
+
 TOKEN = re.compile(r'([^\W\d]+|\d+|[^\w\s])', re.U)
 
 
@@ -149,4 +163,22 @@ def mystem_tokenize(text):
 
     data = MYSTEM.analyze(text)
     chunks = parse_mystem(data)
+    return find_substrings(chunks, text)
+
+
+MOSES_TOK = None
+
+
+def moses_tokenize(text):
+    from mosestokenizer import MosesTokenizer
+
+    global MOSES_TOK
+    if not MOSES_TOK:
+        MOSES_TOK = MosesTokenizer('ru')
+        # disable
+        MOSES_TOK.argv.append('-no-escape')  # " -> &quot;
+        MOSES_TOK.argv.remove('-a')  # - -> @-@
+        MOSES_TOK.restart()
+
+    chunks = MOSES_TOK(text)
     return find_substrings(chunks, text)

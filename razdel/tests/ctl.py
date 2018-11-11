@@ -19,12 +19,15 @@ from razdel.eval.zoo import (
     deepmipt_sentenize,
     nltk_sentenize,
     segtok_sentenize,
+    moses_sentenize,
 
     space_tokenize,
     re_tokenize,
     nltk_tokenize,
     spacy_tokenize,
     spacy_tokenize2,
+    mystem_tokenize,
+    moses_tokenize,
 )
 from razdel import (
     sentenize,
@@ -42,6 +45,7 @@ ZOO = {
     'deepmipt_sentenize': deepmipt_sentenize,
     'nltk_sentenize': nltk_sentenize,
     'segtok_sentenize': segtok_sentenize,
+    'moses_sentenize': moses_sentenize,
     'sentenize': sentenize,
 
     'space_tokenize': space_tokenize,
@@ -49,6 +53,8 @@ ZOO = {
     'nltk_tokenize': nltk_tokenize,
     'spacy_tokenize': spacy_tokenize,
     'spacy_tokenize2': spacy_tokenize2,
+    'mystem_tokenize': mystem_tokenize,
+    'moses_tokenize': moses_tokenize,
     'tokenize': tokenize,
 }
 
