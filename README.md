@@ -314,3 +314,9 @@ pv sents.txt | ctl up sentenize > t; mv t sents.txt
 ```bash
 cat data/*_tokens.txt | ctl sample 1000 | ctl gen | ctl up tokenize | ctl diff moses_tokenize | less
 ```
+
+Измерить производительность `razdel`
+
+```bash
+cat data/*_tokens.txt | ctl sample 10000 | pv -l | ctl gen | ctl diff tokenize | wc -l
+```
