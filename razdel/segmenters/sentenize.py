@@ -294,16 +294,19 @@ class SentSplit(Split):
             return match.group(1)
 
 
-class SentSplitter(Splitter):
-    __attributes__ = ['pattern']
+DELIMITER = '({smiles}|[{delimiters}])'.format(
+    delimiters=re.escape(DELIMITERS),
+    smiles=SMILES
+)
 
-    def __init__(self, window=10):
-        self.pattern = '({smiles}|[{delimiters}])'.format(
-            delimiters=re.escape(DELIMITERS),
-            smiles=SMILES
-        )
+
+class SentSplitter(Splitter):
+    __attributes__ = ['pattern', 'window']
+
+    def __init__(self, pattern=DELIMITER, window=10):
+        self.pattern = pattern
         self.window = window
-        self.re = re.compile(self.pattern, re.U)
+        self.re = re.compile(pattern, re.U)
 
     def __call__(self, text):
         matches = self.re.finditer(text)
@@ -347,8 +350,8 @@ RULES = [FunctionRule(_) for _ in [
 
 
 class SentSegmenter(Segmenter):
-    def __init__(self):
-        super(SentSegmenter, self).__init__(SentSplitter(), RULES)
+    def __init__(self, split=SentSplitter(), rules=RULES):
+        super(SentSegmenter, self).__init__(split, rules)
 
     @property
     def debug(self):
