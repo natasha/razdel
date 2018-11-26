@@ -6,7 +6,7 @@ from setuptools import setup, find_packages
 
 setup(
     name='razdel',
-    version='0.2.0',
+    version='0.3.0',
     description='Splits russian text into tokens, sentences, section. Rule-based',
     url='https://github.com/natasha/razdel',
     author='Alexander Kukushkin',
