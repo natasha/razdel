@@ -102,7 +102,7 @@ class DashRule(Rule2112):
 
 
 class UnderscoreRule(Rule2112):
-    name = 'dash'
+    name = 'underscore'
 
     def delimiter(self, delimiter):
         return delimiter == '_'
