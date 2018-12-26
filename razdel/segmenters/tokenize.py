@@ -176,6 +176,18 @@ def other(split):
 
 ########
 #
+#  EXCEPTION
+#
+#######
+
+
+def yahoo(split):
+    if split.left_1.normal == 'yahoo' and split.right == '!':
+        return JOIN
+
+
+########
+#
 #   SPLIT
 #
 ########
@@ -275,6 +287,8 @@ RULES = [
 
     FunctionRule(punct),
     FunctionRule(other),
+
+    FunctionRule(yahoo),
 ]
 
 
