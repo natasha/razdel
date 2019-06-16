@@ -9,7 +9,10 @@ ci:
 	pytest -vv --pep8 --flakes razdel --int --cov razdel --cov-report xml
 
 wheel:
-	python setup.py bdist_wheel --universal
+	python setup.py bdist_wheel
+
+version:
+	bumpversion minor
 
 upload:
 	twine upload dist/*

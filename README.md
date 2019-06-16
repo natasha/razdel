@@ -283,6 +283,16 @@ make test
 make int  # 2000 integration tests
 ```
 
+Пакет
+
+```bash
+make version
+git push
+git push --tags
+
+make clean wheel upload
+```
+
 Алиас `ctl`
 
 ```bash
