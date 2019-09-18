@@ -297,7 +297,10 @@ class TokenSegmenter(Segmenter):
         super(TokenSegmenter, self).__init__(TokenSplitter(), RULES)
 
     def segment(self, parts):
-        buffer = next(parts)
+        try:
+            buffer = next(parts)
+        except StopIteration:
+            return
         for split in parts:
             right = next(parts)
             split.buffer = buffer

@@ -30,7 +30,10 @@ class Segmenter(Record):
                 return action == JOIN
 
     def segment(self, parts):
-        buffer = next(parts)
+        try:
+            buffer = next(parts)
+        except StopIteration:
+            return
         for split in parts:
             right = next(parts)
             split.buffer = buffer
