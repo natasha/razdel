@@ -18,5 +18,10 @@ upload:
 	twine upload dist/*
 
 clean:
-	find razdel -name '*.pyc' -not -path '*/__pycache__/*' -o -name '.DS_Store*' | xargs rm
-	rm -rf dist build *.egg-info coverage.xml
+	find . \
+		-name '*.pyc' \
+		-o -name __pycache__ \
+		-o -name .DS_Store \
+		| xargs rm -rf
+	rm -rf dist/ build/ .cache/ .ipynb_checkpoints/ .pytest_cache/ \
+		.coverage *.egg-info/
