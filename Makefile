@@ -1,12 +1,12 @@
 
 test:
-	pytest -vv --pep8 --flakes razdel
+	pytest -vv \
+		--pep8 --flakes razdel \
+		--int 100 \
+		--cov-report term-missing --cov-report xml --cov razdel
 
-int:
-	pytest -vv razdel --int
-
-ci:
-	pytest -vv --pep8 --flakes razdel --int --cov razdel --cov-report xml
+full:
+	pytest --int 10000 razdel
 
 wheel:
 	python setup.py bdist_wheel

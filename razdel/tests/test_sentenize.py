@@ -64,9 +64,9 @@ def test_unit(test):
     run(sentenize, test)
 
 
-def int_tests():
+def int_tests(count):
     path = data_path('sents.txt')
-    lines = data_lines(path, 1000)
+    lines = data_lines(path, count)
     return parse_partitions(lines)
 
 

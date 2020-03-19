@@ -4,8 +4,8 @@ from random import seed, sample
 
 
 def run(segment, test):
-    guess = list(segment.debug(test.as_text))
-    etalon = list(test.as_substrings)
+    guess = list(segment(test.text))
+    etalon = list(test.substrings)
     assert guess == etalon
 
 
@@ -15,6 +15,12 @@ def data_path(filename):
         'data',
         filename
     )
+
+
+def load_lines(path):
+    with open(path) as file:
+        for line in file:
+            yield line.rstrip('\n')
 
 
 def data_lines(path, size):

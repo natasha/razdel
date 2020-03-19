@@ -1,18 +1,23 @@
 
 import sys
 import argparse
-from random import seed, sample
+from random import seed, sample as sample_
 
-from razdel.compat import (
-    decode,
-    encode,
-    BrokenPipeError
+from razdel import (
+    sentenize,
+    tokenize
 )
-from razdel.eval.tests import (
+
+from .partition import (
+    parse_partitions,
+    format_partitions,
+    update_partitions
+)
+from .gen import (
     generate_partition_precision_tests,
     generate_partition_recall_tests
 )
-from razdel.eval.zoo import (
+from .zoo import (
     dot_sentenize,
     deepmipt_sentenize,
     nltk_sentenize,
@@ -26,15 +31,6 @@ from razdel.eval.zoo import (
     spacy_tokenize2,
     mystem_tokenize,
     moses_tokenize,
-)
-from razdel import (
-    sentenize,
-    tokenize
-)
-from .partition import (
-    parse_partitions,
-    format_partitions,
-    update_partitions
 )
 
 
@@ -59,15 +55,15 @@ ZOO = {
 
 def stdin_lines():
     for line in sys.stdin:
-        yield decode(line).rstrip('\n')
+        yield line.rstrip('\n')
 
 
 def stdout_lines(lines):
     for line in lines:
-        print(encode(line), file=sys.stdout)
+        print(line)
 
 
-def generate_(partitions, precision, recall):
+def gen_(partitions, precision, recall):
     for partition in partitions:
         if precision:
             for test in generate_partition_precision_tests(partition):
@@ -77,7 +73,7 @@ def generate_(partitions, precision, recall):
                 yield test
 
 
-def generate_command(args):
+def gen(args):
     precision = args.precision
     recall = args.recall
     if not precision and not recall:
@@ -85,32 +81,32 @@ def generate_command(args):
         recall = True
     lines = stdin_lines()
     partitions = parse_partitions(lines)
-    tests = generate_(partitions, precision, recall)
+    tests = gen_(partitions, precision, recall)
     lines = format_partitions(tests)
     stdout_lines(lines)
 
 
-def sample_command(args):
+def sample(args):
     seed(args.seed)
     lines = list(stdin_lines())
-    lines = sample(lines, args.size)
+    lines = sample_(lines, args.size)
     stdout_lines(lines)
 
 
 def show_(guess, etalon):
     print('---etalon')
     for _ in etalon:
-        print('>', encode(_.text))
+        print('>', _.text)
     print('---guess')
     for _ in guess:
-        print('>', encode(_.text))
+        print('>', _.text)
     print()
 
 
 def diff_(tests, segment, show):
     for test in tests:
-        guess = list(segment(test.as_text))
-        etalon = list(test.as_substrings)
+        guess = list(segment(test.text))
+        etalon = list(test.substrings)
         if guess != etalon:
             if show:
                 show_(guess, etalon)
@@ -118,7 +114,7 @@ def diff_(tests, segment, show):
                 yield test
 
 
-def diff_command(args):
+def diff(args):
     segment = ZOO[args.segment]
     lines = stdin_lines()
     partitions = parse_partitions(lines)
@@ -127,7 +123,7 @@ def diff_command(args):
     stdout_lines(lines)
 
 
-def update_command(args):
+def up(args):
     segment = ZOO[args.segment]
     lines = stdin_lines()
     partitions = parse_partitions(lines)
@@ -137,29 +133,29 @@ def update_command(args):
 
 
 def main():
-    parser = argparse.ArgumentParser(prog='ctl')
+    parser = argparse.ArgumentParser(prog='razdel-ctl')
     parser.set_defaults(function=None)
 
-    sub = parser.add_subparsers()
+    subs = parser.add_subparsers()
 
-    generate = sub.add_parser('gen')
-    generate.set_defaults(function=generate_command)
-    generate.add_argument('--precision', action='store_true')
-    generate.add_argument('--recall', action='store_true')
+    sub = subs.add_parser('gen')
+    sub.set_defaults(function=gen)
+    sub.add_argument('--precision', action='store_true')
+    sub.add_argument('--recall', action='store_true')
 
-    sample = sub.add_parser('sample')
-    sample.set_defaults(function=sample_command)
-    sample.add_argument('size', type=int)
-    sample.add_argument('--seed', type=int, default=1)
+    sub = subs.add_parser('sample')
+    sub.set_defaults(function=sample)
+    sub.add_argument('size', type=int)
+    sub.add_argument('--seed', type=int, default=1)
 
-    diff = sub.add_parser('diff')
-    diff.set_defaults(function=diff_command)
-    diff.add_argument('segment', choices=ZOO)
-    diff.add_argument('--show', action='store_true')
+    sub = subs.add_parser('diff')
+    sub.set_defaults(function=diff)
+    sub.add_argument('segment', choices=ZOO)
+    sub.add_argument('--show', action='store_true')
 
-    run = sub.add_parser('up')
-    run.set_defaults(function=update_command)
-    run.add_argument('segment', choices=ZOO)
+    sub = subs.add_parser('up')
+    sub.set_defaults(function=up)
+    sub.add_argument('segment', choices=ZOO)
 
     args = sys.argv[1:]
     args = parser.parse_args(args)
