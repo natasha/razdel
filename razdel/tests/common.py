@@ -1,10 +1,6 @@
-# coding: utf-8
-from __future__ import unicode_literals
 
 import os
 from random import seed, sample
-
-from razdel.utils import load_lines
 
 
 def run(segment, test):

@@ -1,9 +1,7 @@
-# coding: utf-8
-from __future__ import unicode_literals
 
 import re
 
-from razdel.utils import (
+from razdel.record import (
     Record,
     cached_property
 )

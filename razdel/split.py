@@ -1,7 +1,5 @@
-# coding: utf-8
-from __future__ import unicode_literals
 
-from razdel.utils import Record
+from .record import Record
 
 
 class Split(Record):

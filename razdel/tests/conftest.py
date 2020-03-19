@@ -1,5 +1,3 @@
-# coding: utf-8
-from __future__ import unicode_literals
 
 
 def pytest_assertrepr_compare(op, left, right):

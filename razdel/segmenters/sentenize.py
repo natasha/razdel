@@ -1,9 +1,7 @@
-# coding: utf-8
-from __future__ import unicode_literals
 
 import re
 
-from razdel.utils import cached_property
+from razdel.record import cached_property
 from razdel.rule import (
     JOIN,
     FunctionRule

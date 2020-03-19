@@ -1,15 +1,6 @@
-# coding: utf-8
-from __future__ import unicode_literals, print_function
 
-from razdel.utils import (
-    Record,
-    assert_type
-)
-from razdel.rule import (
-    JOIN,
-    Rule
-)
-from razdel.split import Splitter
+from razdel.record import Record
+from razdel.rule import JOIN
 from razdel.substring import find_substrings
 
 
@@ -17,10 +8,7 @@ class Segmenter(Record):
     __attributes__ = ['split', 'rules']
 
     def __init__(self, split, rules):
-        assert_type(split, Splitter)
         self.split = split
-        for rule in rules:
-            assert_type(rule, Rule)
         self.rules = rules
 
     def join(self, split):

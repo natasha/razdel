@@ -1,14 +1,3 @@
-# coding: utf-8
-from __future__ import unicode_literals
-
-from os.path import join as join_path  # noqa
-from glob import iglob as list_paths  # noqa
-from xml.etree import ElementTree as ET
-
-from razdel.compat import (
-    decode,
-    encode,
-)
 
 
 class cached_property(object):
@@ -67,35 +56,3 @@ class Record(object):
                         printer.breakable()
                     value = getattr(self, key)
                     printer.pretty(value)
-
-
-def assert_type(item, types):
-    if not isinstance(item, types):
-        if not isinstance(types, tuple):
-            types = [types]
-        raise TypeError('expected {types}, got {type}'.format(
-            types=' or '.join(_.__name__ for _ in types),
-            type=type(item).__name__
-        ))
-
-
-def load_lines(path):
-    with open(path) as file:
-        for line in file:
-            yield decode(line).rstrip('\n')
-
-
-def dump_lines(lines, path):
-    with open(path, 'w') as file:
-        for line in lines:
-            file.write(encode(line) + '\n')
-
-
-def load_xml(path):
-    return ET.iterparse(path, events=('start', 'end'))
-
-
-def filter_xml(stream, tags):
-    for event, node in stream:
-        if node.tag in tags:
-            yield event, node
