@@ -272,7 +272,7 @@ Definitions for `spacy_tokenize`, `aatimofeev` and other can be found in [segmen
 
 ## Development
 
-Test
+Test:
 
 ```bash
 pip install -e .
@@ -318,7 +318,7 @@ pv sents.txt | razdel-ctl up sentenize > t; mv t sents.txt
 cat data/*_tokens.txt | razdel-ctl sample 1000 | razdel-ctl gen | razdel-ctl up tokenize | razdel-ctl diff moses_tokenize | less
 ```
 
-`razdel` performance
+`razdel` performance:
 
 ```bash
 cat data/*_tokens.txt | razdel-ctl sample 10000 | pv -l | razdel-ctl gen | razdel-ctl diff tokenize | wc -l
