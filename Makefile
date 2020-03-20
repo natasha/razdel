@@ -3,7 +3,8 @@ test:
 	pytest -vv \
 		--pep8 --flakes razdel \
 		--int 100 \
-		--cov-report term-missing --cov-report xml --cov razdel
+		--cov-report term-missing --cov-report xml \
+		--cov-config setup.cfg --cov razdel
 
 full:
 	pytest --int 10000 razdel
