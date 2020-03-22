@@ -46,10 +46,11 @@ $ pip install razdel
 ```
 
 ## Quality, performance
+<a name="evalualtion"></a>
 
 Unfortunately, there is no single correct way to split text into sentences and tokens. For example, one may split `«Как же так?! Захар...» — воскликнут Пронин.` into three sentences `["«Как же так?!",  "Захар...»", "— воскликнут Пронин."]` while `razdel` splits it into two `["«Как же так?!", "Захар...» — воскликнут Пронин."]`. What would be the correct way to tokenizer `т.е.`? One may split in into `т.|е.`, `razdel` splits into `т|.|е|.`.
 
-`razdel` tries to mimic segmentation of these 4 datasets : [SynTagRus](https://github.com/UniversalDependencies/UD_Russian-SynTagRus), [OpenCorpora](http://opencorpora.org), GICRYA and RNC from [morphoRuEval-2017](https://github.com/dialogue-evaluation/morphoRuEval-2017). These datasets mainly consist of news and fiction. `razdel` is optimized on these types of texts. Library may perform worse on other domains like social media, scientific articles, legal documents.
+`razdel` tries to mimic segmentation of these 4 datasets : <a href="https://github.com/natasha/corus#load_ud_syntag">SynTagRus</a>, <a href="https://github.com/natasha/corus#load_morphoru_corpora">OpenCorpora</a>, <a href="https://github.com/natasha/corus#load_morphoru_gicrya">GICRYA</a> and <a href="https://github.com/natasha/corus#load_morphoru_rnc">RNC</a>. These datasets mainly consist of news and fiction. `razdel` rules are optimized for these kinds of texts. Library may perform worse on other domains like social media, scientific articles, legal documents.
 
 We measure absolute number of errors. There are a lot of trivial cases in the tokenization task. For example, text `чуть-чуть?!` is not non-trivial, one may split it into `чуть|-|чуть|?|!` while the correct tokenization is `чуть-чуть|?!`, such examples are rare. Vast majority of cases are trivial, for example text `в 5 часов ...` is correctly tokenized even via Python native `str.split` into `в| |5| |часов| |...`. Due to the large number of trivial case overall quality of all segmenators is high, it is hard to compare differentiate between for examlpe 99.33%, 99.95% and 99.88%, so we report the absolute number of errors.
 
@@ -57,9 +58,11 @@ We measure absolute number of errors. There are a lot of trivial cases in the to
 
 `time` — total seconds taken.
 
-Definitions for `spacy_tokenize`, `aatimofeev` and other can be found in [segmenters.py](https://github.com/natasha/naeval/blob/master/neaval/segment/segmenters.py). [eval.ipynb](https://github.com/natasha/razdel/blob/master/eval.ipynb)
+`spacy_tokenize`, `aatimofeev` and others a defined in <a href="https://github.com/natasha/naeval/blob/master/neaval/segment/segmenters.py">naeval/segment/segmenters.py</a>. Tables are computed in <a href="https://github.com/natasha/naeval/blob/master/naeval/scripts/segment/main.ipynb">naeval/scripts/segment/main.ipynb</a>.
 
 ### Tokens
+
+<!--- token --->
 <table border="0" class="dataframe">
   <thead>
     <tr>
@@ -94,7 +97,7 @@ Definitions for `spacy_tokenize`, `aatimofeev` and other can be found in [segmen
       <td>0.3</td>
     </tr>
     <tr>
-      <th>spacy_tokenize</th>
+      <th>spacy</th>
       <td>3283</td>
       <td>5.6</td>
       <td>2639</td>
@@ -127,10 +130,10 @@ Definitions for `spacy_tokenize`, `aatimofeev` and other can be found in [segmen
       <td>3.5</td>
     </tr>
     <tr>
-      <th>moses</th>
+      <th>mosestokenizer</th>
       <td><b>1188</b></td>
       <td><b>2.0</b></td>
-      <td><b>1641</b></td>
+      <td>1641</td>
       <td><b>2.1</b></td>
       <td>1696</td>
       <td><b>1.7</b></td>
@@ -149,7 +152,7 @@ Definitions for `spacy_tokenize`, `aatimofeev` and other can be found in [segmen
       <td><b>1.8</b></td>
     </tr>
     <tr>
-      <th>aatimofeev</th>
+      <th>aatimofeev/spacy_russian_tokenizer</th>
       <td><b>1485</b></td>
       <td>56.2</td>
       <td><b>1225</b></td>
@@ -160,20 +163,34 @@ Definitions for `spacy_tokenize`, `aatimofeev` and other can be found in [segmen
       <td>47.6</td>
     </tr>
     <tr>
+      <th>koziev/rutokenizer</th>
+      <td>2744</td>
+      <td><b>1.1</b></td>
+      <td><b>1632</b></td>
+      <td><b>1.1</b></td>
+      <td>2576</td>
+      <td><b>0.9</b></td>
+      <td>9915</td>
+      <td><b>0.9</b></td>
+    </tr>
+    <tr>
       <th>razdel.tokenize</th>
       <td><b>1158</b></td>
-      <td><b>2.9</b></td>
+      <td>2.9</td>
       <td>1861</td>
-      <td><b>3.0</b></td>
+      <td>3.0</td>
       <td><b>315</b></td>
-      <td><b>2.0</b></td>
+      <td>2.0</td>
       <td><b>2264</b></td>
-      <td><b>2.1</b></td>
+      <td>2.1</td>
     </tr>
   </tbody>
 </table>
+<!--- token --->
 
 ### Sentencies
+
+<!--- sent --->
 <table border="0" class="dataframe">
   <thead>
     <tr>
@@ -219,7 +236,7 @@ Definitions for `spacy_tokenize`, `aatimofeev` and other can be found in [segmen
       <td><b>3.1</b></td>
     </tr>
     <tr>
-      <th>moses</th>
+      <th>mosestokenizer</th>
       <td>60212</td>
       <td>10.6</td>
       <td>39361</td>
@@ -241,7 +258,7 @@ Definitions for `spacy_tokenize`, `aatimofeev` and other can be found in [segmen
       <td><b>5.4</b></td>
     </tr>
     <tr>
-      <th>deeppavlov</th>
+      <th>deeppavlov/rusenttokenize</th>
       <td><b>10138</b></td>
       <td><b>9.9</b></td>
       <td><b>1180</b></td>
@@ -264,6 +281,7 @@ Definitions for `spacy_tokenize`, `aatimofeev` and other can be found in [segmen
     </tr>
   </tbody>
 </table>
+<!--- sent --->
 
 ## Support
 
