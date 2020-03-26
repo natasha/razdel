@@ -8,7 +8,7 @@ with open('README.md') as file:
 
 setup(
     name='razdel',
-    version='0.4.0',
+    version='0.5.0',
 
     description='Splits russian text into tokens, sentences, section. Rule-based',
     long_description=description,
