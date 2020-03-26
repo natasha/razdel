@@ -87,102 +87,102 @@ We measure absolute number of errors. There are a lot of trivial cases in the to
   <tbody>
     <tr>
       <th>re.findall(\w+|\d+|\p+)</th>
-      <td>4217</td>
+      <td>4161</td>
       <td>0.5</td>
-      <td>2914</td>
+      <td>2660</td>
       <td>0.5</td>
-      <td>2402</td>
-      <td>0.3</td>
-      <td>8630</td>
-      <td>0.3</td>
+      <td>2277</td>
+      <td>0.4</td>
+      <td>7606</td>
+      <td>0.4</td>
     </tr>
     <tr>
       <th>spacy</th>
-      <td>3283</td>
-      <td>5.6</td>
-      <td>2639</td>
-      <td>5.5</td>
-      <td>1742</td>
-      <td>3.8</td>
-      <td>4010</td>
-      <td>3.5</td>
+      <td>4388</td>
+      <td>6.2</td>
+      <td>2103</td>
+      <td>5.8</td>
+      <td><b>1740</b></td>
+      <td>4.1</td>
+      <td>4057</td>
+      <td>3.9</td>
     </tr>
     <tr>
       <th>nltk.word_tokenize</th>
-      <td>5712</td>
-      <td>3.7</td>
-      <td>67523</td>
-      <td>3.9</td>
-      <td>12149</td>
+      <td>14245</td>
+      <td>3.4</td>
+      <td>60893</td>
+      <td>3.3</td>
+      <td>13496</td>
       <td>2.7</td>
-      <td>13564</td>
-      <td>2.8</td>
+      <td>41485</td>
+      <td>2.9</td>
     </tr>
     <tr>
       <th>mystem</th>
-      <td>4280</td>
-      <td>4.9</td>
-      <td>3624</td>
-      <td>4.6</td>
-      <td>2515</td>
-      <td>3.6</td>
-      <td><b>1812</b></td>
-      <td>3.5</td>
+      <td>4514</td>
+      <td>5.0</td>
+      <td>3153</td>
+      <td>4.7</td>
+      <td>2497</td>
+      <td>3.7</td>
+      <td><b>2028</b></td>
+      <td>3.9</td>
     </tr>
     <tr>
       <th>mosestokenizer</th>
-      <td><b>1188</b></td>
-      <td><b>2.0</b></td>
-      <td>1641</td>
+      <td><b>1886</b></td>
       <td><b>2.1</b></td>
-      <td>1696</td>
-      <td><b>1.7</b></td>
-      <td>2486</td>
+      <td><b>1330</b></td>
+      <td><b>1.9</b></td>
+      <td>1796</td>
+      <td><b>1.6</b></td>
+      <td><b>2123</b></td>
       <td><b>1.7</b></td>
     </tr>
     <tr>
       <th>segtok.word_tokenize</th>
-      <td>1491</td>
-      <td><b>2.4</b></td>
-      <td><b>1552</b></td>
-      <td><b>2.4</b></td>
-      <td><b>1657</b></td>
+      <td>2772</td>
+      <td><b>2.3</b></td>
+      <td><b>1288</b></td>
+      <td><b>2.3</b></td>
+      <td>1759</td>
       <td><b>1.8</b></td>
-      <td><b>1238</b></td>
+      <td><b>1229</b></td>
       <td><b>1.8</b></td>
     </tr>
     <tr>
       <th>aatimofeev/spacy_russian_tokenizer</th>
-      <td><b>1485</b></td>
-      <td>56.2</td>
-      <td><b>1225</b></td>
-      <td>53.3</td>
-      <td><b>630</b></td>
-      <td>39.2</td>
-      <td>2972</td>
-      <td>47.6</td>
+      <td>2930</td>
+      <td>48.7</td>
+      <td><b>719</b></td>
+      <td>51.1</td>
+      <td><b>678</b></td>
+      <td>39.5</td>
+      <td>2681</td>
+      <td>52.2</td>
     </tr>
     <tr>
       <th>koziev/rutokenizer</th>
-      <td>2744</td>
+      <td><b>2627</b></td>
       <td><b>1.1</b></td>
-      <td><b>1632</b></td>
-      <td><b>1.1</b></td>
-      <td>2576</td>
-      <td><b>0.9</b></td>
-      <td>9915</td>
+      <td>1386</td>
+      <td><b>1.0</b></td>
+      <td>2893</td>
+      <td><b>0.8</b></td>
+      <td>9411</td>
       <td><b>0.9</b></td>
     </tr>
     <tr>
       <th>razdel.tokenize</th>
-      <td><b>1158</b></td>
+      <td><b>1510</b></td>
       <td>2.9</td>
-      <td>1861</td>
-      <td>3.0</td>
-      <td><b>315</b></td>
+      <td>1483</td>
+      <td>2.8</td>
+      <td><b>322</b></td>
       <td>2.0</td>
-      <td><b>2264</b></td>
-      <td>2.1</td>
+      <td>2124</td>
+      <td>2.2</td>
     </tr>
   </tbody>
 </table>
@@ -215,69 +215,69 @@ We measure absolute number of errors. There are a lot of trivial cases in the to
   <tbody>
     <tr>
       <th>re.split([.?!…])</th>
-      <td>19974</td>
+      <td>20456</td>
+      <td>0.9</td>
+      <td>6576</td>
+      <td>0.6</td>
+      <td>10084</td>
       <td>0.7</td>
-      <td>5986</td>
-      <td>0.4</td>
-      <td>9380</td>
-      <td>0.5</td>
-      <td>22483</td>
-      <td>0.8</td>
+      <td>23356</td>
+      <td>1.0</td>
     </tr>
     <tr>
       <th>segtok.split_single</th>
-      <td>19450</td>
-      <td>16.5</td>
-      <td><b>4140</b></td>
-      <td>10.3</td>
-      <td>158672</td>
-      <td><b>1.5</b></td>
-      <td>172887</td>
-      <td><b>3.1</b></td>
+      <td>19008</td>
+      <td>17.8</td>
+      <td>4422</td>
+      <td>13.4</td>
+      <td>159738</td>
+      <td><b>1.1</b></td>
+      <td>164218</td>
+      <td><b>2.8</b></td>
     </tr>
     <tr>
       <th>mosestokenizer</th>
-      <td>60212</td>
-      <td>10.6</td>
-      <td>39361</td>
-      <td><b>5.4</b></td>
-      <td>12238</td>
-      <td>5.7</td>
-      <td>168743</td>
-      <td>385.1</td>
+      <td>41666</td>
+      <td><b>8.9</b></td>
+      <td>22082</td>
+      <td><b>5.7</b></td>
+      <td>12663</td>
+      <td>6.4</td>
+      <td>50560</td>
+      <td><b>7.4</b></td>
     </tr>
     <tr>
       <th>nltk.sent_tokenize</th>
-      <td><b>16346</b></td>
-      <td><b>8.8</b></td>
-      <td>4194</td>
-      <td><b>4.3</b></td>
-      <td><b>6774</b></td>
-      <td><b>4.2</b></td>
-      <td><b>32391</b></td>
-      <td><b>5.4</b></td>
+      <td><b>16420</b></td>
+      <td><b>10.1</b></td>
+      <td><b>4350</b></td>
+      <td><b>5.3</b></td>
+      <td><b>7074</b></td>
+      <td><b>5.6</b></td>
+      <td><b>32534</b></td>
+      <td>8.9</td>
     </tr>
     <tr>
       <th>deeppavlov/rusenttokenize</th>
-      <td><b>10138</b></td>
-      <td><b>9.9</b></td>
-      <td><b>1180</b></td>
-      <td>6.0</td>
-      <td><b>8402</b></td>
-      <td>5.6</td>
-      <td><b>20717</b></td>
-      <td>93.4</td>
+      <td><b>10192</b></td>
+      <td>10.9</td>
+      <td><b>1210</b></td>
+      <td>7.9</td>
+      <td><b>8910</b></td>
+      <td>6.8</td>
+      <td><b>21410</b></td>
+      <td><b>7.0</b></td>
     </tr>
     <tr>
       <th>razdel.sentenize</th>
-      <td><b>9408</b></td>
-      <td><b>5.4</b></td>
-      <td><b>798</b></td>
-      <td><b>3.4</b></td>
-      <td><b>11020</b></td>
-      <td><b>3.6</b></td>
-      <td><b>10791</b></td>
-      <td><b>5.4</b></td>
+      <td><b>9274</b></td>
+      <td><b>6.1</b></td>
+      <td><b>824</b></td>
+      <td><b>3.9</b></td>
+      <td><b>11414</b></td>
+      <td><b>4.5</b></td>
+      <td><b>10594</b></td>
+      <td>7.5</td>
     </tr>
   </tbody>
 </table>
