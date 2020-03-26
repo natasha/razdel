@@ -43,9 +43,9 @@ ATOM = re.compile(
     (?P<RU>[а-яё]+)
     |(?P<LAT>[a-z]+)
     |(?P<INT>\d+)
-    |(?P<PUNCT>[''' + re.escape(PUNCTS) + '''])
+    |(?P<PUNCT>[%s])
     |(?P<OTHER>\S)
-    ''',
+    ''' % re.escape(PUNCTS),
     re.I | re.U | re.X
 )
 
