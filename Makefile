@@ -10,7 +10,7 @@ full:
 	pytest --int 10000 razdel
 
 wheel:
-	python setup.py bdist_wheel
+	python setup.py sdist bdist_wheel
 
 version:
 	bumpversion minor
