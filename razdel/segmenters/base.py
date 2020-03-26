@@ -4,6 +4,13 @@ from razdel.rule import JOIN
 from razdel.substring import find_substrings
 
 
+def safe_next(iter):
+    try:
+        return next(iter)
+    except StopIteration:
+        return
+
+
 class Segmenter(Record):
     __attributes__ = ['split', 'rules']
 
@@ -18,10 +25,10 @@ class Segmenter(Record):
                 return action == JOIN
 
     def segment(self, parts):
-        try:
-            buffer = next(parts)
-        except StopIteration:
+        buffer = safe_next(parts)
+        if buffer is None:
             return
+
         for split in parts:
             right = next(parts)
             split.buffer = buffer

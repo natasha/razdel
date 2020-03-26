@@ -16,6 +16,7 @@ from razdel.split import (
 )
 
 from .base import (
+    safe_next,
     Segmenter,
     DebugSegmenter
 )
@@ -295,10 +296,10 @@ class TokenSegmenter(Segmenter):
         super(TokenSegmenter, self).__init__(TokenSplitter(), RULES)
 
     def segment(self, parts):
-        try:
-            buffer = next(parts)
-        except StopIteration:
+        buffer = safe_next(parts)
+        if buffer is None:
             return
+
         for split in parts:
             right = next(parts)
             split.buffer = buffer
