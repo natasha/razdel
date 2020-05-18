@@ -307,6 +307,9 @@ class SentSplitter(Splitter):
         self.re = re.compile(pattern, re.U)
 
     def __call__(self, text):
+        if not text.strip():
+            return
+
         matches = self.re.finditer(text)
         previous = 0
         for match in matches:
