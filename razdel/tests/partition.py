@@ -6,7 +6,7 @@ from razdel.substring import Substring
 
 
 FILL = ' '
-FILL_PATTERN = re.compile('^\s*$')
+FILL_PATTERN = re.compile(r'^\s*$')
 
 
 class Partition(Record):
