@@ -286,6 +286,7 @@ We measure absolute number of errors. There are a lot of trivial cases in the to
 
 - Chat — https://telegram.me/natural_language_processing
 - Issues — https://github.com/natasha/razdel/issues
+- Commercial support — https://lab.alexkuk.ru
 
 ## Development
 
