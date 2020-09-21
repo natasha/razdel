@@ -187,7 +187,7 @@ We measure absolute number of errors. There are a lot of trivial cases in the to
 </table>
 <!--- token --->
 
-### Sentencies
+### Sentences
 
 <!--- sent --->
 <table border="0" class="dataframe">
