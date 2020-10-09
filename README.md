@@ -2,7 +2,7 @@
 
 ![CI](https://github.com/natasha/razdel/workflows/CI/badge.svg) [![codecov](https://codecov.io/gh/natasha/razdel/branch/master/graph/badge.svg)](https://codecov.io/gh/natasha/razdel)
 
-`razdel` — rule-based system for Russian sentence and word tokenization..
+`razdel` — rule-based system for Russian sentence and word tokenization. See <a href="https://natasha.github.io/razdel">natasha.github.io article</a> for more info.
 
 ## Usage
 
