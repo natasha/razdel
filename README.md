@@ -49,7 +49,7 @@ $ pip install razdel
 
 Materials are in Russian:
 
-* <a href="https://natasha.github.io/naeval">Razdel page on natasha.github.io</a> 
+* <a href="https://natasha.github.io/razdel">Razdel page on natasha.github.io</a> 
 * <a href="https://youtu.be/-7XT_U6hVvk?t=1345">Razdel section of Datafest 2020 talk</a>
 
 ## Evaluation
