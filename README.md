@@ -2,7 +2,7 @@
 
 ![CI](https://github.com/natasha/razdel/workflows/CI/badge.svg) [![codecov](https://codecov.io/gh/natasha/razdel/branch/master/graph/badge.svg)](https://codecov.io/gh/natasha/razdel)
 
-`razdel` — rule-based system for Russian sentence and word tokenization. See <a href="https://natasha.github.io/razdel">natasha.github.io article</a> for more info.
+`razdel` — rule-based system for Russian sentence and word tokenization.
 
 ## Usage
 
@@ -44,6 +44,13 @@
 ```bash
 $ pip install razdel
 ```
+
+## Documentation
+
+Materials are in Russian:
+
+* <a href="https://natasha.github.io/naeval">Razdel page on natasha.github.io</a> 
+* <a href="https://youtu.be/-7XT_U6hVvk?t=1345">Razdel section of Datafest 2020 talk</a>
 
 ## Evaluation
 
