@@ -292,8 +292,8 @@ RULES = [
 
 
 class TokenSegmenter(Segmenter):
-    def __init__(self):
-        super(TokenSegmenter, self).__init__(TokenSplitter(), RULES)
+    def __init__(self, split=TokenSplitter(), rules=RULES):
+        super(TokenSegmenter, self).__init__(split, rules)
 
     def segment(self, parts):
         buffer = safe_next(parts)
