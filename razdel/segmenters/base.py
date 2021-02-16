@@ -51,7 +51,7 @@ class Segmenter(Record):
 
 class DebugSegmenter(Segmenter):
     def join(self, split):
-        print(split.left, '|', split.delimiter, '|', split.right)
+        print("{split.left!r} | {split.delimiter!r} | {split.right!r}".format(split=split))
         for rule in self.rules:
             action = rule(split)
             if action:
