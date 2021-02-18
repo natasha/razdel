@@ -64,7 +64,7 @@ We measure absolute number of errors. There are a lot of trivial cases in the to
 
 `time` — seconds taken to process whole dataset.
 
-`spacy_tokenize`, `aatimofeev` and others a defined in <a href="https://github.com/natasha/naeval/blob/master/naeval/segment/models.py">naeval/segment/models.py</a>, for links to models see <a href="https://github.com/natasha/naeval#models">Naeval registry</a>. Tables are computed in <a href="https://github.com/natasha/naeval/blob/master/scripts/segment/main.ipynb">naeval/segment/main.ipynb</a>.
+`spacy_tokenize`, `aatimofeev` and others a defined in <a href="https://github.com/natasha/naeval/blob/master/naeval/segment/models.py">naeval/segment/models.py</a>, for links to models see <a href="https://github.com/natasha/naeval#models">Naeval registry</a>. Tables are computed in <a href="https://github.com/natasha/naeval/blob/master/scripts/01_segment/main.ipynb">naeval/segment/main.ipynb</a>.
 
 ### Tokens
 
