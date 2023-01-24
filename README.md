@@ -1,6 +1,6 @@
 <img src="https://github.com/natasha/natasha-logos/blob/master/razdel.svg">
 
-![CI](https://github.com/natasha/razdel/workflows/CI/badge.svg) [![codecov](https://codecov.io/gh/natasha/razdel/branch/master/graph/badge.svg)](https://codecov.io/gh/natasha/razdel)
+![CI](https://github.com/natasha/razdel/actions/workflows/test.yml/badge.svg)
 
 `razdel` — rule-based system for Russian sentence and word tokenization.
 
@@ -39,7 +39,7 @@
 
 ## Installation
 
-`razdel` supports Python 3.5+ and PyPy 3.
+`razdel` supports Python 3.7+ and PyPy 3.
 
 ```bash
 $ pip install razdel
@@ -297,53 +297,63 @@ We measure absolute number of errors. There are a lot of trivial cases in the to
 
 ## Development
 
-Test:
+Dev env
 
 ```bash
+python -m venv ~/.venvs/natasha-razdel
+source ~/.venvs/natasha-razdel/bin/activate
+
+pip install -r requirements/dev.txt
 pip install -e .
-pip install -r requirements/ci.txt
+```
+
+Test
+
+```bash
 make test
 make int  # 2000 integration tests
 ```
 
-Package:
+Release
 
 ```bash
-make version
+# Update setup.py version
+
+git commit -am 'Up version'
+git tag v0.5.0
+
 git push
 git push --tags
-
-make clean wheel upload
 ```
 
-`mystem` errors on `syntag`:
+`mystem` errors on `syntag`
 
 ```bash
 # see naeval/data
 cat syntag_tokens.txt | razdel-ctl sample 1000 | razdel-ctl gen | razdel-ctl diff --show moses_tokenize | less
 ```
 
-Non-trivial token tests:
+Non-trivial token tests
 
 ```bash
 pv data/*_tokens.txt | razdel-ctl gen --recall | razdel-ctl diff space_tokenize > tests.txt
 pv data/*_tokens.txt | razdel-ctl gen --precision | razdel-ctl diff re_tokenize >> tests.txt
 ```
 
-Update integration tests:
+Update integration tests
 
 ```bash
-cd razdel/tests/data/
+cd tests/data/
 pv sents.txt | razdel-ctl up sentenize > t; mv t sents.txt
 ```
 
-`razdel` and `moses` diff:
+`razdel` and `moses` diff
 
 ```bash
 cat data/*_tokens.txt | razdel-ctl sample 1000 | razdel-ctl gen | razdel-ctl up tokenize | razdel-ctl diff moses_tokenize | less
 ```
 
-`razdel` performance:
+`razdel` performance
 
 ```bash
 cat data/*_tokens.txt | razdel-ctl sample 10000 | pv -l | razdel-ctl gen | razdel-ctl diff tokenize | wc -l
