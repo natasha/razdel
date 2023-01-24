@@ -12,7 +12,7 @@ def pytest_assertrepr_compare(op, left, right):
 
 
 def pytest_addoption(parser):
-    parser.addoption('--int', type='int')
+    parser.addoption('--int', type=int)
 
 
 def pytest_generate_tests(metafunc):

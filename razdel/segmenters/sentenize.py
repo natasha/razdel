@@ -132,7 +132,7 @@ def sokr_left(split):
         return JOIN
 
     if left in SOKRS and is_sokr(right):
-            return JOIN
+        return JOIN
 
 
 def inside_pair_sokr(split):

@@ -12,6 +12,7 @@ def generate_precision_tests(partitions):
         for test in generate_partition_precision_tests(partition):
             yield test
 
+
 def correct_precision(segment, partition):
     etalon = list(partition.substrings)
     assert len(etalon) == 1
