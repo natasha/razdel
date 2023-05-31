@@ -7,7 +7,8 @@ from .partition import parse_partitions
 from .common import (
     run,
     data_path,
-    data_lines
+    data_lines,
+    load_lines
 )
 
 
@@ -60,6 +61,13 @@ UNIT = parse_partitions([
 @pytest.mark.parametrize('test', UNIT)
 def test_unit(test):
     run(sentenize, test)
+
+
+def test_che_sample():
+    path = data_path('che_sents_sample.txt')
+    lines = load_lines(path)
+    for partition in parse_partitions(lines):
+        run(sentenize, partition)
 
 
 def int_tests(count):
