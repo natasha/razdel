@@ -30,7 +30,7 @@ from .punct import (
 )
 
 
-RU = 'RU'
+CHE = 'CHE'
 LAT = 'LAT'
 INT = 'INT'
 PUNCT = 'PUNCT'
@@ -40,7 +40,7 @@ PUNCTS = '\\/!#$%&*+,.:;<=>?@^_`|~№…' + DASHES + QUOTES + BRACKETS
 
 ATOM = re.compile(
     r'''
-    (?P<RU>[а-яё]+)
+    (?P<CHE>([I1]*[а-яё][I1]*)+)
     |(?P<LAT>[a-z]+)
     |(?P<INT>\d+)
     |(?P<PUNCT>[%s])
@@ -164,11 +164,11 @@ def other(split):
     left = split.left_1.type
     right = split.right_1.type
 
-    if left == OTHER and right in (OTHER, RU, LAT):
+    if left == OTHER and right in (OTHER, CHE, LAT):
         # ΔP
         return JOIN
 
-    if left in (OTHER, RU, LAT) and right == OTHER:
+    if left in (OTHER, CHE, LAT) and right == OTHER:
         # Δσ mβж
         return JOIN
 
