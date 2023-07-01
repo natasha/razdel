@@ -295,6 +295,10 @@ We measure absolute number of errors. There are a lot of trivial cases in the to
 - Issues — https://github.com/natasha/razdel/issues
 - Commercial support — https://lab.alexkuk.ru
 
+## Ported versions
+
+* C#/.NET: https://github.com/Doomer3D/Natasha
+
 ## Development
 
 Dev env
